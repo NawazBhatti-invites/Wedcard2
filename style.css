@@ -1,0 +1,156 @@
+/* ---------- Fonts (local files; see assets/fonts/README.md) ---------- */
+@font-face{font-family:'Tempting';src:url(../assets/fonts/Tempting.otf) format('opentype');font-display:swap}
+@font-face{font-family:'Birds of Paradise';src:url(../assets/fonts/BirdsOfParadise.ttf) format('truetype');font-display:swap}
+@font-face{font-family:'Astoria';src:url(../assets/fonts/Astoria.otf) format('opentype');font-display:swap}
+@font-face{font-family:'Romantic';src:url(../assets/fonts/Romantic.otf) format('opentype');font-display:swap}
+@font-face{font-family:'Poppins Local';font-weight:400;src:url(../assets/fonts/Poppins-Regular.ttf) format('truetype');font-display:swap}
+@font-face{font-family:'Poppins Local';font-weight:500;src:url(../assets/fonts/Poppins-Medium.ttf) format('truetype');font-display:swap}
+:root{
+  --vh:100vh;                 /* real screen height in px, set by js/script.js (works on every phone, even without svh/dvh support) */
+  --u:calc(var(--vh)/100);
+  --tempting:'Tempting','Parisienne','Segoe Script',cursive;
+  --astoria:'Astoria','Parisienne','Segoe Script',cursive;
+  --romantic:'Romantic','Parisienne','Segoe Script',cursive;
+  --pop:'Poppins Local','Poppins',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --ink:#6a5236;--paper:#f3ebdd;--gold:#8a6a38;
+  color-scheme:only light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;background:#e6d6c4;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;font-family:var(--tempting);color:var(--ink);overflow-x:hidden;background:#e6d6c4}
+body:not(.open){overflow:hidden;height:var(--vh)}
+body:not(.open) #inv{visibility:hidden}
+h1,h2,h3,p{margin:0;font-weight:400}
+.t{font-family:var(--tempting)}.p{font-family:var(--pop)}
+:focus-visible{outline:2px solid #b8975a;outline-offset:3px}
+
+/* ---------- Engraved / pressed lettering (solid colours, so text can never disappear) ---------- */
+.eng{color:var(--ink);text-shadow:0 1px 0 rgba(255,255,255,.95),0 -1px 0 rgba(86,62,30,.38),0 0 2px rgba(201,162,94,.3)}
+.gold{color:var(--gold);text-shadow:0 1px 0 rgba(255,255,255,.95),0 -1px 0 rgba(86,62,30,.4),0 0 2px rgba(201,162,94,.45)}
+
+/* ---------- Pinned stage: pictures stay fixed, content fades in and out ---------- */
+#progress{position:fixed;top:0;left:0;height:3px;width:100%;transform:scaleX(0);transform-origin:0 0;background:linear-gradient(90deg,#d9c08a,#8f6f3e);z-index:60}
+#inv{position:relative;width:100%;max-width:520px;max-width:min(520px,calc(var(--vh)*.5617));margin:0 auto;height:calc(var(--n,8)*var(--vh));background:var(--paper);box-shadow:0 0 60px rgba(90,70,40,.25);
+  font-size:13px;font-size:clamp(12px,min(calc(var(--u)*2.1),4.3vw),18px)}
+.pin{position:sticky;top:0;height:var(--vh);overflow:hidden}
+.bg{position:absolute;top:0;right:0;bottom:0;left:0;background-size:cover;background-position:center;transition:opacity 1.3s ease}
+.bg.f{background-image:url(../assets/images/frame.jpg)}
+.bg.c{background-image:url(../assets/images/couple.jpg);opacity:0}
+.pin[data-bg="c"] .bg.c{opacity:1}
+.sc{position:absolute;top:0;right:0;bottom:0;left:0;display:flex;flex-direction:column;overflow-y:auto;opacity:0;visibility:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;transition:opacity .8s ease,visibility 0s linear .8s}
+.sc::-webkit-scrollbar{display:none}
+.sc.on{opacity:1;visibility:visible;transition:opacity .9s ease .3s,visibility 0s}
+/* the safe zone inside the floral border; content is spread evenly through it, so nothing is cramped and nothing floats in empty space */
+.in{flex:1 0 auto;width:60%;margin:0 auto;padding:calc(var(--u)*13) 0 calc(var(--u)*14);display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;text-align:center;gap:.5em}
+.in.wide{width:72%;padding-top:calc(var(--u)*11);padding-bottom:calc(var(--u)*12)}
+#s-welcome .in{width:70%}
+.rv{opacity:0;transition:opacity .9s ease;transition-delay:calc(var(--i,0)*.1s + .3s)}
+.sc:not(.on) .rv{transition-delay:0s}
+.sc.on .rv{opacity:1}
+
+/* ---------- Type scale (script fonts get generous line height so no letter is ever cut) ---------- */
+.big{font-size:1.95em;line-height:1.4;text-wrap:balance}
+.sml{font-size:1.2em;line-height:1.55;text-wrap:balance}
+.tx{font-size:1.3em;line-height:1.6;text-wrap:balance}
+.hd{font-size:2.3em;line-height:1.4;text-wrap:balance}
+.ehd{font-family:var(--romantic);font-size:1.95em;font-weight:400;line-height:1.55}
+.cue{font-size:1.2em;line-height:1.5;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(5px)}}
+.ref{max-width:100%;height:auto;display:block}.bism{width:60%}.insh{width:72%}
+.fb{font-family:'Aref Ruqaa','Amiri','Traditional Arabic',serif;font-size:2.2em;line-height:1.8;color:var(--gold);direction:rtl}
+/* programme (Poppins) */
+.dt{font-size:1.02em;font-weight:500;line-height:1.55;text-wrap:balance}
+.sm{font-size:.82em;line-height:1.5}
+.ad{font-size:.98em;line-height:1.6;text-wrap:balance}.ad b{font-weight:500}#vn{display:block}
+.cl{font-size:.84em;line-height:1.5}
+.tm,.cd>div{border:1px solid rgba(169,138,98,.38);background:linear-gradient(145deg,rgba(120,95,65,.12),rgba(255,255,255,.3));box-shadow:inset 1px 2px 4px rgba(100,76,48,.34),inset -1px -1px 2px rgba(255,255,255,.9)}
+.tm{font-size:1.6em;font-weight:500;line-height:1.5;padding:.12em 1em;border-radius:999px}
+.tm small{display:block;font-size:.5em;font-weight:400;line-height:1.35;padding-bottom:.25em}
+.two{display:flex;gap:.5em;flex-wrap:wrap;justify-content:center}.two .tm{font-size:1.15em;padding:.12em .6em;border-radius:1.1em}
+.cd{display:flex;gap:.35em;justify-content:center}
+.cd>div{min-width:3.3em;padding:.35em .2em;border-radius:.8em;font-size:.92em}
+.cd b{display:block;font-size:1.45em;font-weight:500;line-height:1.2}.cd span{font-size:.7em}
+/* Walima sits inside the arch, above the couple */
+.sc.walima{overflow:hidden}
+.sc.walima .in{position:absolute;left:50%;top:calc(var(--u)*12.5);width:54%;height:calc(var(--u)*36);margin:0;padding:0;transform:translateX(-50%);justify-content:space-evenly;gap:.1em}
+.walima .ehd{font-size:1.9em;line-height:1.4}.walima .tm{font-size:1.3em}.walima .cd{font-size:.82em}.walima .dt{font-size:1em}.walima .ad{font-size:.9em;line-height:1.45}.walima .cl{font-size:.8em}
+.walima .btn{min-height:40px;font-size:1em;padding:.15em 1.1em}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:.3em 1.5em;border-radius:999px;border:1px solid rgba(169,138,98,.75);
+  background:linear-gradient(180deg,#fffaf1,#efe2cc);color:#43341f;font-family:var(--tempting);font-size:1.5em;line-height:1.3;text-decoration:none;cursor:pointer;text-shadow:0 1px 0 #fff;box-shadow:0 2px 6px rgba(110,90,60,.22),inset 0 1px 0 #fff}
+.btn:active{transform:translateY(1px);box-shadow:inset 0 2px 4px rgba(110,90,60,.3)}
+.btn.small{font-size:1.25em;min-height:42px;padding:.2em 1em}.btn[disabled]{opacity:.55;cursor:wait}
+.btns{display:flex;gap:.4em;flex-wrap:wrap;justify-content:center}
+.evb{display:grid;grid-template-columns:1fr 1fr;gap:.45em;width:100%}
+.evb .btn{flex-direction:column;line-height:1.35;padding:.5em .6em;margin:0;font-size:.85em;border-radius:1.1em}.evb small{font-family:var(--pop);font-size:.8em;color:var(--ink)}
+.evb .btn:last-child:nth-child(odd){grid-column:1/-1}
+
+/* ---------- Font assignments ---------- */
+.ast,.ast *{font-family:var(--astoria)}                /* invitation wording page */
+.ast .hd{font-size:2.3em}.ast .tx{font-size:1.3em}
+.pp,.pp *{font-family:var(--pop)}                      /* directions page, RSVP page and form */
+.pp .hd{font-size:1.65em;font-weight:500;line-height:1.35}
+.pp .tx{font-size:.98em;line-height:1.6}
+.pp .btn{font-size:1em;font-weight:500;min-height:44px}.pp .btn.small{font-size:.92em;min-height:42px}
+.pp .evb .btn{font-size:.82em}
+.tabs{display:flex;gap:.35em;justify-content:center;flex-wrap:wrap}.tabs[hidden]{display:none}
+.tabs button{min-height:40px;padding:.3em .9em;border-radius:999px;border:1px solid rgba(169,138,98,.7);background:#fffaf1;color:var(--ink);font:500 .9em var(--pop);cursor:pointer}
+.tabs button.on{background:linear-gradient(180deg,#c9ab6f,#a07f45);color:#fff;border-color:#8f6f3e}
+.map{width:100%;height:clamp(120px,calc(var(--u)*19),170px);border:1px solid rgba(169,138,98,.6);border-radius:.8em;background:#e9dcc8}
+.sub{font-size:1.1em;font-weight:500}
+.calls{display:flex;gap:.4em;flex-wrap:wrap;justify-content:center}
+
+/* ---------- Card opening ---------- */
+#cover{position:fixed;top:0;right:0;bottom:0;left:0;z-index:100;background:#e6d6c4;overflow:hidden;cursor:pointer;transition:opacity 1s ease}
+#cover.fade{opacity:0;pointer-events:none}
+.stage{position:absolute;left:50%;top:50%;width:100vw;width:max(100vw,calc(var(--vh)*.5598));height:var(--vh);height:max(var(--vh),calc(100vw/.5598));transform:translate(-50%,-50%);perspective:1800px;transition:transform 1.9s cubic-bezier(.6,0,.2,1)}
+.stage>*{position:absolute;display:block;user-select:none;-webkit-user-drag:none}
+.photo{top:0;left:0;width:100%;height:100%}
+.interior,.door{top:10.4%;height:81.44%}
+.interior{left:5.62%;width:88.42%;background:url(../assets/images/frame.jpg) center/cover}
+.door{backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:transform 1.8s cubic-bezier(.5,0,.2,1),filter 1.8s ease}
+.door.l{left:5.62%;width:44.17%;transform-origin:0 50%}.door.r{left:50.07%;width:43.97%;transform-origin:100% 50%}
+.seal{left:39.45%;top:44.56%;width:20.53%;height:auto;filter:drop-shadow(0 6px 10px rgba(80,60,30,.35));transition:transform .8s ease,opacity .8s ease;animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.05)}}
+.opening .seal{animation:none;transform:scale(1.35) translateY(-10%);opacity:0}
+.swing .door.l{transform:rotateY(-104deg);filter:brightness(.82)}.swing .door.r{transform:rotateY(104deg);filter:brightness(.82)}
+.zoom .stage{transform:translate(-50%,-50%) scale(var(--z,1)) translate(.17%,-1.12%)}
+.tap{position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom) + var(--u)*4);transform:translateX(-50%);z-index:3;border:0;background:none;font-family:var(--tempting);font-size:26px;line-height:1.4;cursor:pointer;color:var(--ink);text-shadow:0 1px 0 rgba(255,255,255,.95),0 -1px 0 rgba(86,62,30,.38);animation:bob 2.4s ease-in-out infinite;min-height:48px;white-space:nowrap}
+.opening .tap{opacity:0;transition:opacity .4s}
+
+/* ---------- Floating music control ---------- */
+#music{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));z-index:70;display:flex;gap:8px}
+#music[hidden]{display:none}
+#music button{width:46px;height:46px;border-radius:50%;border:1px solid rgba(169,138,98,.8);background:linear-gradient(180deg,#fffaf1,#efe2cc);color:#8f6f3e;cursor:pointer;display:grid;place-items:center;padding:0;box-shadow:0 2px 8px rgba(80,60,30,.3)}
+.eq{display:flex;gap:3px;align-items:flex-end;height:16px}.eq i{width:3px;height:6px;background:#8f6f3e;border-radius:2px}
+#music.playing .eq i{animation:eq 1s ease-in-out infinite}.eq i:nth-child(2){animation-delay:.2s!important}.eq i:nth-child(3){animation-delay:.4s!important}
+@keyframes eq{50%{height:16px}}
+#music.muted #m-wave{display:none}
+
+/* ---------- RSVP dialog (Poppins) ---------- */
+dialog{width:min(92vw,460px);max-height:calc(var(--vh)*.92);padding:0;border:1px solid rgba(169,138,98,.7);border-radius:1.2em;background:linear-gradient(180deg,#fffaf1,#f1e6d3);color:var(--ink);box-shadow:0 20px 60px rgba(40,30,10,.45);overflow:auto;font-size:15px}
+dialog::backdrop{background:rgba(60,45,25,.55)}
+dialog form,#rsvp-ok{padding:1.2em 1.2em 1.4em;display:flex;flex-direction:column;gap:.8em;position:relative;text-align:left}
+#rsvp-ok{text-align:center;align-items:center;padding:2em 1.2em}
+dialog .hd{font-size:1.5em;text-align:center}
+.hint{font-size:.9em;text-align:center;color:var(--ink)}
+dialog label{font-size:.9em;font-weight:500;display:flex;flex-direction:column;gap:.2em}
+dialog input,dialog textarea{font:400 16px var(--pop);color:#3d2f1e;padding:.65em .8em;border:1px solid rgba(169,138,98,.7);border-radius:.6em;background:#fffdf8;width:100%}
+.hp{position:absolute!important;left:-9999px;width:1px!important;height:1px!important;opacity:0}
+.x{position:absolute;right:.4em;top:.3em;border:0;background:none;font-size:2em;line-height:1;color:#8f6f3e;cursor:pointer;width:44px;height:44px}
+#rsvp-events{display:grid;gap:.5em}
+.evr{border:1px solid rgba(169,138,98,.5);border-radius:.8em;padding:.5em .7em;background:rgba(255,253,248,.8)}
+.evr b{display:block;font:500 14px var(--pop)}.evr small{font:400 12px var(--pop)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:.4em;margin-top:.4em}
+.seg label{font:500 13px var(--pop);display:block;position:relative}
+.seg input{position:absolute;opacity:0;width:100%;height:100%;top:0;left:0;cursor:pointer}
+.seg span{display:block;text-align:center;padding:.55em .3em;border:1px solid rgba(169,138,98,.6);border-radius:999px;background:#fffdf8}
+.seg input:checked+span{background:linear-gradient(180deg,#c9ab6f,#a07f45);color:#fff;border-color:#8f6f3e}
+.seg input:focus-visible+span{outline:2px solid #8f6f3e;outline-offset:2px}
+.err{color:#9a2b2b;font-size:.9em;background:#fbeaea;border:1px solid #e3b5b5;border-radius:.6em;padding:.5em .7em}
+.chk{width:84px;height:84px;fill:none;stroke:#8f6f3e;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.chk circle{stroke-dasharray:151;stroke-dashoffset:151;animation:draw .8s ease forwards}.chk path{stroke-dasharray:40;stroke-dashoffset:40;animation:draw .5s .6s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important}.rv{opacity:1;transition:none}.stage,.door,.seal{transition-duration:.01s!important}}
