@@ -94,9 +94,14 @@ function venue() {
   var i = GROUPS[grp][sub] != null ? GROUPS[grp][sub] : GROUPS[grp][0];
   tabs.forEach(function (t, k) { t.classList.toggle('on', k === grp); });
   
-  // Only show subtabs if the active group (Barat) has more than 1 venue
-  subBox.hidden = GROUPS[grp].length < 2;
-  subBox.style.display = GROUPS[grp].length < 2 ? 'none' : 'flex';
+  // Show subtabs ONLY when Barat (group 1) is selected
+  if (grp === 1) {
+    subBox.removeAttribute('hidden');
+    subBox.style.display = 'flex';
+  } else {
+    subBox.setAttribute('hidden', 'true');
+    subBox.style.display = 'none';
+  }
 
   subs.forEach(function (t, k) { t.classList.toggle('on', k === sub); });
   $('#vn').textContent = V[i].n; $('#va').textContent = V[i].a; $('#go').href = V[i].u;
