@@ -66,7 +66,12 @@
     if (i === cur) return; cur = i;
     scenes.forEach(function (s, k) { s.classList.toggle('on', k === i); });
     stage.setAttribute('data-bg', scenes[i].getAttribute('data-bg'));        /* background cross-fades between pictures */
-    if (scenes[i].id === 's-loc' && !mapLoaded) { mapLoaded = true; venue(); }
+   function show(i) {
+  if (i === cur) return; cur = i;
+  scenes.forEach(function (s, k) { s.classList.toggle('on', k === i); });
+  stage.setAttribute('data-bg', scenes[i].getAttribute('data-bg'));
+  if (scenes[i].id === 's-loc') { mapLoaded = true; venue(); }
+}
   }
   function update() {
     var max = Math.max(1, document.documentElement.scrollHeight - vh);
@@ -93,10 +98,10 @@ var V = [
 function venue() {
   var i = GROUPS[grp][sub] != null ? GROUPS[grp][sub] : GROUPS[grp][0];
   
-  // Highlight main tabs
+  // Highlight active main tab
   tabs.forEach(function (t, k) { t.classList.toggle('on', k === grp); });
   
-  // Show subtabs ONLY when Barat (grp === 1) is active
+  // Strictly show subtabs ONLY when Barat (grp === 1) is active
   if (grp === 1) {
     subBox.removeAttribute('hidden');
     subBox.style.cssText = 'display: flex !important;';
@@ -105,10 +110,10 @@ function venue() {
     subBox.style.cssText = 'display: none !important;';
   }
 
-  // Highlight subtabs (Departure vs Destination)
+  // Highlight active subtab (Departure vs Destination)
   subs.forEach(function (t, k) { t.classList.toggle('on', k === sub); });
   
-  // Update venue info and force map update regardless of mapLoaded flag
+  // Update venue info and force map src update
   if ($('#vn')) $('#vn').textContent = V[i].n;
   if ($('#va')) $('#va').textContent = V[i].a;
   if ($('#go')) $('#go').href = V[i].u;
@@ -118,10 +123,20 @@ function venue() {
 tabs.forEach(function (t, k) {
   t.addEventListener('click', function () {
     grp = k;
-    sub = 0; // Reset subtab to Departure on main tab click
+    sub = 0; // Default to Departure on main tab switch
     venue();
   });
 });
+
+subs.forEach(function (t, k) {
+  t.addEventListener('click', function () {
+    sub = k; // Switch subtab location
+    venue();
+  });
+});
+
+// Force initialization
+venue();
 
 subs.forEach(function (t, k) {
   t.addEventListener('click', function () {
