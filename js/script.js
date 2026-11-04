@@ -19,8 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => stage.classList.add('swing'), 400);
       setTimeout(() => {
         cover.classList.add('fade');
+        // Completely remove cover from layout so touch/scroll is 100% unblocked on mobile
+        setTimeout(() => { cover.style.display = 'none'; }, 1000);
+
         document.body.classList.add('open');
         if (sections[0]) sections[0].classList.add('on'); // Activate first section
+        
         if (bgm) {
           bgm.volume = (window.WEDDING_CONFIG?.music?.volume || 60) / 100;
           bgm.play().catch(() => {});
