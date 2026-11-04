@@ -6,10 +6,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const rsvpForm = document.getElementById('rsvp-form');
   const rsvpOk = document.getElementById('rsvp-ok');
   
-  // Use Web App URL from config.js or fallback to direct URL
-  const scriptUrl = (typeof CONFIG !== 'undefined' && CONFIG.SCRIPT_URL) 
-    ? CONFIG.SCRIPT_URL 
-    : "https://script.google.com/macros/s/AKfycbw36p-AC-tVYnRxDgg8LB68nJSaYjP_ZwlVYDeckhnB-c-65k4RbUX2m5GaCysY9zSNjQ/exec";
+  // Uses endpoint from config.js (window.WEDDING_CONFIG)
+  const scriptUrl = (typeof window.WEDDING_CONFIG !== 'undefined' && window.WEDDING_CONFIG.rsvpEndpoint) 
+    ? window.WEDDING_CONFIG.rsvpEndpoint 
+    : (typeof CONFIG !== 'undefined' && CONFIG.SCRIPT_URL)
+      ? CONFIG.SCRIPT_URL
+      : "https://script.google.com/macros/s/AKfycbxx45hB_9DrDD7F_7Ilf4mEBpNK0vvudBS6307I1JRNjoGjLaWzf6a1NR99a71VEtBUQw/exec";
 
   if (!rsvpForm) return;
 
@@ -19,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
   rsvpForm.addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // Honeypot anti-spam check (if hidden honeypot field is filled, abort submit)
+    // Honeypot anti-spam check
     const hp = rsvpForm.querySelector('input[name="website"]');
     if (hp && hp.value) return;
 
@@ -29,13 +31,11 @@ document.addEventListener('DOMContentLoaded', function() {
       submitBtn.textContent = "Sending...";
     }
 
-    // Safe helper function to get values of event radio buttons
     const getRadioVal = (name) => {
       const checked = rsvpForm.querySelector(`input[name="${name}"]:checked`);
       return checked ? checked.value : '';
     };
 
-    // Gather form payload matching your exact HTML input name attributes
     const formData = {
       name: rsvpForm.querySelector('input[name="name"]')?.value || '',
       phone: rsvpForm.querySelector('input[name="phone"]')?.value || '',
@@ -46,15 +46,13 @@ document.addEventListener('DOMContentLoaded', function() {
       message: rsvpForm.querySelector('textarea[name="message"]')?.value || ''
     };
 
-    // Send payload to Google Apps Script Web App
     fetch(scriptUrl, {
       method: 'POST',
-      mode: 'no-cors', // Prevents CORS errors on Google Apps Script Web Apps
+      mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
     })
     .then(() => {
-      // Hide form and display success panel
       rsvpForm.hidden = true;
       if (rsvpOk) rsvpOk.hidden = false;
     })
