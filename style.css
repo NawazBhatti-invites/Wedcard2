@@ -154,3 +154,14 @@ dialog input,dialog textarea{font:400 16px var(--pop);color:#3d2f1e;padding:.65e
 @keyframes draw{to{stroke-dashoffset:0}}
 
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important}.rv{opacity:1;transition:none}.stage,.door,.seal{transition-duration:.01s!important}}
+/* Subtabs visibility and layout fix */
+#subtabs[hidden] {
+  display: none !important;
+}
+
+#subtabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
