@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Use Web App URL from config.js or fallback to direct URL
   const scriptUrl = (typeof CONFIG !== 'undefined' && CONFIG.SCRIPT_URL) 
     ? CONFIG.SCRIPT_URL 
-    : "https://script.google.com/macros/s/AKfycbyjcIH107Pc0ItAsL7O8Bor0N_36q5aFyzMTj9l5lB7DKkALWj-MJI-UEOCDYO5YFcwrw/exec";
+    : "https://script.google.com/macros/s/AKfycbw36p-AC-tVYnRxDgg8LB68nJSaYjP_ZwlVYDeckhnB-c-65k4RbUX2m5GaCysY9zSNjQ/exec";
 
   if (!rsvpForm) return;
 
