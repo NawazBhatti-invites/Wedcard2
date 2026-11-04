@@ -93,10 +93,10 @@ var V = [
 function venue() {
   var i = GROUPS[grp][sub] != null ? GROUPS[grp][sub] : GROUPS[grp][0];
   
-  // Highlight active main tab
+  // 1. Highlight active main event tab (0: Rasm-e-Hina, 1: Barat, 2: Walima)
   tabs.forEach(function (t, k) { t.classList.toggle('on', k === grp); });
   
-  // Show subtabs ONLY when Barat (grp === 1) is selected
+  // 2. Show subtabs ONLY when Barat (grp === 1) is selected; hide for Rasm-e-Hina (0) and Walima (2)
   if (grp === 1) {
     subBox.removeAttribute('hidden');
     subBox.style.setProperty('display', 'flex', 'important');
@@ -105,7 +105,35 @@ function venue() {
     subBox.style.setProperty('display', 'none', 'important');
   }
 
-  // Highlight active subtab
+  // 3. Highlight active subtab (0: Departure, 1: Destination)
+  subs.forEach(function (t, k) { t.classList.toggle('on', k === sub); });
+  
+  // 4. Update venue title, address text, direction link, and embedded map
+  if ($('#vn')) $('#vn').textContent = V[i].n;
+  if ($('#va')) $('#va').textContent = V[i].a;
+  if ($('#go')) $('#go').href = V[i].u;
+  if ($('#map')) $('#map').src = 'https://maps.google.com/maps?q=' + V[i].ll + '&z=16&output=embed';
+}
+
+// Main event tab clicks
+tabs.forEach(function (t, k) {
+  t.addEventListener('click', function () {
+    grp = k;
+    sub = 0; // Always reset to Departure (index 0) when switching main tabs
+    venue();
+  });
+});
+
+// Subtab clicks (Departure vs Destination under Barat)
+subs.forEach(function (t, k) {
+  t.addEventListener('click', function () {
+    sub = k;
+    venue();
+  });
+});
+
+// Run once on page initialization
+venue();
   subs.forEach(function (t, k) { t.classList.toggle('on', k === sub); });
   
   // Update venue info, directions link, and map iframe
