@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const rsvpAllBtn = document.getElementById('rsvp-all');
   const closeBtns = document.querySelectorAll('[data-close]');
 
-  // Open Dialog
+  // Open Dialog Trigger
   if (rsvpOpenBtn && rsvpDlg) {
     rsvpOpenBtn.addEventListener('click', () => {
       if (rsvpForm) rsvpForm.hidden = false;
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Dynamically generate styled event selection options for Rasm-e-Hina, Barat, Walima
+  // Dynamically generate styled event selection options for Rasm-e-Hina, Barat, Walima in Poppins font
   const eventsData = [
     { id: 'hina', name: 'hina', label: 'Rasm-e-Hina', date: 'Fri, 20 Nov 2026' },
     { id: 'barat', name: 'barat', label: 'Barat', date: 'Sat, 21 Nov 2026' },
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (rsvpEventsContainer && rsvpEventsContainer.children.length === 0) {
     eventsData.forEach(ev => {
       const card = document.createElement('div');
-      card.className = 'evr';
+      card.className = 'evr pp';
       card.innerHTML = `
         <b>${ev.label}</b>
         <small>${ev.date}</small>
