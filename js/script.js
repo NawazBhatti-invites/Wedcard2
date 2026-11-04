@@ -1,7 +1,101 @@
-// js/script.js - Interactive UI, Animations & Dynamic Form Elements
+// js/script.js - Interactive UI, Scroll Observer, Countdowns & RSVP Modal
 
 document.addEventListener('DOMContentLoaded', () => {
-  // --- 1. RSVP Modal & Dynamic Event Buttons ---
+  // --- 1. Cover / Door Unfolding Animation & Opening ---
+  const cover = document.getElementById('cover');
+  const openBtn = document.getElementById('open');
+  const stage = document.getElementById('stage');
+  const bgm = document.getElementById('bgm');
+  const sections = document.querySelectorAll('.sc');
+  const inv = document.getElementById('inv');
+  const progress = document.getElementById('progress');
+
+  const n = sections.length;
+  if (inv) inv.style.setProperty('--n', n);
+
+  if (cover && openBtn) {
+    const handleOpen = () => {
+      stage.classList.add('opening');
+      setTimeout(() => stage.classList.add('swing'), 400);
+      setTimeout(() => {
+        cover.classList.add('fade');
+        document.body.classList.add('open');
+        if (sections[0]) sections[0].classList.add('on'); // Activate first section
+        if (bgm) {
+          bgm.volume = (window.WEDDING_CONFIG?.music?.volume || 60) / 100;
+          bgm.play().catch(() => {});
+          const musicControl = document.getElementById('music');
+          if (musicControl) musicControl.hidden = false;
+        }
+      }, 1600);
+    };
+
+    openBtn.addEventListener('click', handleOpen);
+    cover.addEventListener('click', (e) => {
+      if (e.target === cover || e.target.closest('#open')) handleOpen();
+    });
+  }
+
+  // --- 2. Scroll Observer & Progress Bar ---
+  window.addEventListener('scroll', () => {
+    if (!document.body.classList.contains('open') || !inv) return;
+    const rect = inv.getBoundingClientRect();
+    const totalH = inv.offsetHeight - window.innerHeight;
+    const scrolled = -rect.top;
+    let p = Math.max(0, Math.min(1, scrolled / totalH));
+    
+    if (progress) progress.style.transform = `scaleX(${p})`;
+
+    const index = Math.min(n - 1, Math.max(0, Math.floor((p + 0.05) * n)));
+    sections.forEach((sec, idx) => {
+      if (idx === index) {
+        sec.classList.add('on');
+        const bgType = sec.getAttribute('data-bg');
+        const pin = sec.closest('.pin');
+        if (pin && bgType) pin.setAttribute('data-bg', bgType);
+      } else {
+        sec.classList.remove('on');
+      }
+    });
+  });
+
+  // --- 3. Countdown Timers ---
+  const eventDates = {
+    hina: new Date('2026-11-20T18:00:00').getTime(),
+    barat: new Date('2026-11-21T08:00:00').getTime(),
+    walima: new Date('2026-11-22T14:00:00').getTime()
+  };
+
+  function updateCountdowns() {
+    const now = new Date().getTime();
+    Object.keys(eventDates).forEach(key => {
+      const target = eventDates[key];
+      const diff = target - now;
+      const cdEl = document.querySelector(`[data-cd="${key}"]`);
+      if (!cdEl) return;
+
+      if (diff <= 0) {
+        cdEl.innerHTML = "<div><b>00</b><span>Event Started</span></div>";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+      cdEl.innerHTML = `
+        <div><b>${days}</b><span>Days</span></div>
+        <div><b>${hours}</b><span>Hours</span></div>
+        <div><b>${mins}</b><span>Mins</span></div>
+        <div><b>${secs}</b><span>Secs</span></div>
+      `;
+    });
+  }
+  setInterval(updateCountdowns, 1000);
+  updateCountdowns();
+
+  // --- 4. RSVP Modal & Dynamic Event Buttons ---
   const rsvpDlg = document.getElementById('rsvp-dlg');
   const rsvpOpenBtn = document.getElementById('rsvp-open');
   const rsvpForm = document.getElementById('rsvp-form');
@@ -10,7 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const rsvpAllBtn = document.getElementById('rsvp-all');
   const closeBtns = document.querySelectorAll('[data-close]');
 
-  // Open Dialog Trigger
   if (rsvpOpenBtn && rsvpDlg) {
     rsvpOpenBtn.addEventListener('click', () => {
       if (rsvpForm) rsvpForm.hidden = false;
@@ -23,7 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Close Dialog Buttons
   closeBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       if (typeof rsvpDlg.close === 'function') {
@@ -34,7 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Dynamically generate styled event selection options for Rasm-e-Hina, Barat, Walima in Poppins font
   const eventsData = [
     { id: 'hina', name: 'hina', label: 'Rasm-e-Hina', date: 'Fri, 20 Nov 2026' },
     { id: 'barat', name: 'barat', label: 'Barat', date: 'Sat, 21 Nov 2026' },
@@ -63,7 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // "Select all occasions" button functionality
   if (rsvpAllBtn) {
     rsvpAllBtn.addEventListener('click', () => {
       eventsData.forEach(ev => {
@@ -73,30 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 2. Cover / Door Unfolding Animation ---
-  const cover = document.getElementById('cover');
-  const openBtn = document.getElementById('open');
-  const stage = document.getElementById('stage');
-  const bgm = document.getElementById('bgm');
-
-  if (cover && openBtn) {
-    const handleOpen = () => {
-      stage.classList.add('opening');
-      setTimeout(() => stage.classList.add('swing'), 400);
-      setTimeout(() => {
-        cover.classList.add('fade');
-        document.body.classList.add('open');
-        if (bgm) bgm.play().catch(() => {});
-      }, 1600);
-    };
-
-    openBtn.addEventListener('click', handleOpen);
-    cover.addEventListener('click', (e) => {
-      if (e.target === cover || e.target.closest('#open')) handleOpen();
-    });
-  }
-
-  // --- 3. Locations Tab & Map Switcher ---
+  // --- 5. Locations Tab & Map Switcher ---
   const tabs = document.querySelectorAll('#tabs button');
   const mapIframe = document.getElementById('map');
   const venueName = document.getElementById('vn');
@@ -143,13 +210,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setLocation(0);
 
+  // --- 6. Scroll to Top Button ---
   const toTopBtn = document.getElementById('to-top');
   if (toTopBtn) {
     toTopBtn.addEventListener('click', () => {
-      const invContainer = document.querySelector('.sc.on') || document.querySelector('#inv');
-      if (invContainer) {
-        invContainer.scrollTo({ top: 0, behavior: 'smooth' });
-      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
