@@ -176,3 +176,12 @@ dialog.pp label{font-size:.9em;font-weight:500}
 .tabs{display:flex;gap:.35em;justify-content:center;flex-wrap:wrap}
 .tabs button{min-height:40px;padding:.3em .9em;border-radius:999px;border:1px solid rgba(169,138,98,.75);background:linear-gradient(180deg,#fffaf1,#efe2cc);color:var(--ink);font-family:var(--pop);font-size:.9em;cursor:pointer;box-shadow:0 1px 3px rgba(110,90,60,.15)}
 .tabs button.on{background:linear-gradient(180deg,#c9ab6f,#a07f45);color:#fff;border-color:#8f6f3e;text-shadow:0 1px 0 rgba(0,0,0,.25)}
+/* Increase 1st page font sizes for mobile screens */
+@media (max-width: 600px) {
+  #s-welcome .in .gold.rv {
+    font-size: 2.2rem; /* Adjust heading size */
+  }
+  #s-welcome .in .sml.eng.rv {
+    font-size: 1.1rem; /* Adjust subtitle/intro text size */
+  }
+}
