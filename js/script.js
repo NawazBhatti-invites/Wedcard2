@@ -141,10 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Initialize default location (Rasm-e-Hina)
   setLocation(0);
 
-  // Scroll to top button
   const toTopBtn = document.getElementById('to-top');
   if (toTopBtn) {
     toTopBtn.addEventListener('click', () => {
