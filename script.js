@@ -93,19 +93,44 @@ var V = [
 function venue() {
   var i = GROUPS[grp][sub] != null ? GROUPS[grp][sub] : GROUPS[grp][0];
   
-  // Highlight main tab (Rasm-e-Hina, Barat, Walima)
+  // Highlight active main tab
   tabs.forEach(function (t, k) { t.classList.toggle('on', k === grp); });
   
-  // Toggle visibility: Display subtabs row ONLY when Barat (grp === 1) is active
+  // Show subtabs ONLY when Barat (grp === 1) is selected
   if (grp === 1) {
     subBox.removeAttribute('hidden');
-    subBox.style.display = ''; // Reset display to use CSS class styles (same as main tabs)
+    subBox.style.setProperty('display', 'flex', 'important');
   } else {
     subBox.setAttribute('hidden', 'true');
-    subBox.style.display = 'none';
+    subBox.style.setProperty('display', 'none', 'important');
   }
 
-  // Highlight subtab (Departure vs Destination)
+  // Highlight active subtab
+  subs.forEach(function (t, k) { t.classList.toggle('on', k === sub); });
+  
+  // Update venue info, directions link, and map iframe
+  $('#vn').textContent = V[i].n;
+  $('#va').textContent = V[i].a;
+  $('#go').href = V[i].u;
+  $('#map').src = 'https://maps.google.com/maps?q=' + V[i].ll + '&z=16&output=embed';
+}
+
+tabs.forEach(function (t, k) {
+  t.addEventListener('click', function () {
+    grp = k;
+    sub = 0; // Default to Departure when clicking Barat
+    venue();
+  });
+});
+
+subs.forEach(function (t, k) {
+  t.addEventListener('click', function () {
+    sub = k; // Switch to Destination or Departure
+    venue();
+  });
+});
+
+venue();
   subs.forEach(function (t, k) { t.classList.toggle('on', k === sub); });
   
   // Update venue title, address, and Google map
