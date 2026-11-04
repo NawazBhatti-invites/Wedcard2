@@ -165,3 +165,7 @@ dialog input,dialog textarea{font:400 16px var(--pop);color:#3d2f1e;padding:.65e
   gap: 10px;
   margin-top: 10px;
 }
+/* Force subtabs to hide completely when the hidden attribute is present */
+#subtabs[hidden] {
+  display: none !important;
+}
