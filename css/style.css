@@ -163,3 +163,7 @@ dialog.pp label{font-size:.9em;font-weight:500}
 #subtabs[hidden] {
   display: none !important;
 }
+/* Subtabs visibility rule */
+#subtabs[hidden] {
+  display: none !important;
+}
