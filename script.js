@@ -82,7 +82,7 @@
   size();
   $('#to-top').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
 
-  /* ---------- Venue tabs (Locations scene): Barat has two locations, departure then destination ---------- */
+  /* ---------- Venue tabs (Locations scene) ---------- */
 var V = [
   { n: 'Al Fateh Marriage Hall', a: 'Rasm-e-Hina, Nankana Sahib', ll: '31.4431226,73.6923472', u: 'https://maps.app.goo.gl/5ijwi6JC4totpVFn6' },
   { n: 'Bhatti House (Ashfaq Bhatti)', a: 'Barat departure, Nankana Sahib', ll: '31.444889,73.694099', u: 'https://maps.app.goo.gl/Tcw7osaGgmZAr4Xz7' },
@@ -93,42 +93,44 @@ var V = [
 function venue() {
   var i = GROUPS[grp][sub] != null ? GROUPS[grp][sub] : GROUPS[grp][0];
   
-  // 1. Highlight active main event tab (0: Rasm-e-Hina, 1: Barat, 2: Walima)
+  // Highlight main tabs
   tabs.forEach(function (t, k) { t.classList.toggle('on', k === grp); });
   
-  // 2. Show subtabs ONLY when Barat (grp === 1) is selected; hide for Rasm-e-Hina (0) and Walima (2)
+  // Show subtabs ONLY when Barat (grp === 1) is active
   if (grp === 1) {
     subBox.removeAttribute('hidden');
-    subBox.style.setProperty('display', 'flex', 'important');
+    subBox.style.cssText = 'display: flex !important;';
   } else {
     subBox.setAttribute('hidden', 'true');
-    subBox.style.setProperty('display', 'none', 'important');
+    subBox.style.cssText = 'display: none !important;';
   }
 
-  // 3. Highlight active subtab (0: Departure, 1: Destination)
+  // Highlight subtabs (Departure vs Destination)
   subs.forEach(function (t, k) { t.classList.toggle('on', k === sub); });
   
-  // 4. Update venue title, address text, direction link, and embedded map
+  // Update venue info and force map update regardless of mapLoaded flag
   if ($('#vn')) $('#vn').textContent = V[i].n;
   if ($('#va')) $('#va').textContent = V[i].a;
   if ($('#go')) $('#go').href = V[i].u;
   if ($('#map')) $('#map').src = 'https://maps.google.com/maps?q=' + V[i].ll + '&z=16&output=embed';
 }
 
-// Main event tab clicks
 tabs.forEach(function (t, k) {
   t.addEventListener('click', function () {
     grp = k;
-    sub = 0; // Always reset to Departure (index 0) when switching main tabs
+    sub = 0; // Reset subtab to Departure on main tab click
     venue();
   });
 });
 
-// Subtab clicks (Departure vs Destination under Barat)
 subs.forEach(function (t, k) {
   t.addEventListener('click', function () {
-    sub = k;
+    sub = k; // Switch subtab location
     venue();
+  });
+});
+
+venue();
   });
 });
 
