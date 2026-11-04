@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Sephora & Hayden';
+  src: url(../assets/fonts/SephoraAndHayden.otf) format('opentype'); /* Update format to 'truetype' if using .ttf */
+  font-display: swap;
+}
 /* ---------- Fonts (local files; see assets/fonts/README.md) ---------- */
 @font-face{font-family:'Tempting';src:url(../assets/fonts/Tempting.otf) format('opentype');font-display:swap}
 @font-face{font-family:'Birds of Paradise';src:url(../assets/fonts/BirdsOfParadise.ttf) format('truetype');font-display:swap}
@@ -7,14 +12,15 @@
 @font-face{font-family:'Poppins Local';font-weight:400;src:url(../assets/fonts/Poppins-Regular.ttf) format('truetype');font-display:swap}
 @font-face{font-family:'Poppins Local';font-weight:500;src:url(../assets/fonts/Poppins-Medium.ttf) format('truetype');font-display:swap}
 
-:root{
-  --tempting:'Astoria','Parisienne','Segoe Script',cursive;   /* updated from Tempting to Astoria */
-  --bop:'Birds of Paradise','Parisienne','Segoe Script',cursive; /* groom's name only */
-  --astoria:'Astoria','Parisienne','Segoe Script',cursive;   /* invitation wording page */
-  --love:'Love','Parisienne','Segoe Script',cursive;           /* Rasm-e-Hina, Barat, Walima headings */
-  --romantic:'Romantic','Parisienne','Segoe Script',cursive; 
-  --pop:'Poppins Local','Poppins',system-ui,sans-serif;         /* three-day programme only */
-  --ink:#6a5236;--paper:#f3ebdd;--champ:#b8975a;--deep:#8f6f3e;
+:root {
+  --tempting: 'Sephora & Hayden', 'Parisienne', 'Segoe Script', cursive;   /* updated */
+  --bop: 'Birds of Paradise', 'Parisienne', 'Segoe Script', cursive;         /* groom's name only */
+  --astoria: 'Sephora & Hayden', 'Parisienne', 'Segoe Script', cursive;     /* invitation wording page - updated */
+  --love: 'Love', 'Parisienne', 'Segoe Script', cursive;                   /* Rasm-e-Hina, Barat, Walima headings */
+  --romantic: 'Romantic', 'Parisienne', 'Segoe Script', cursive; 
+  --pop: 'Poppins Local', 'Poppins', system-ui, sans-serif;                 /* three-day programme only */
+  --ink: #6a5236; --paper: #f3ebdd; --champ: #b8975a; --deep: #8f6f3e;
+}
 }
 
 *{box-sizing:border-box}
