@@ -97,20 +97,8 @@
 
   <section class="sc pp" id="s-loc" data-bg="f"><div class="in wide">
     <h2 class="hd gold rv">Locations</h2>
-    
-    <!-- Main Event Tabs -->
-    <div class="tabs rv" id="tabs">
-        <button type="button" onclick="switchLocation('rasm', this)">Rasm-e-Hina</button>
-        <button type="button" onclick="switchLocation('barat', this)">Barat</button>
-        <button type="button" onclick="switchLocation('walima', this)">Walima</button>
-    </div>
-
-    <!-- Sub-tabs for Departure/Destination (Hidden by default, shown via JavaScript) -->
-    <div class="tabs rv" id="subtabs" style="display: none;">
-        <button type="button" class="on">Departure</button>
-        <button type="button">Destination</button>
-    </div>
-
+    <div class="tabs rv" id="tabs"><button type="button" class="on">Rasm-e-Hina</button><button type="button">Barat</button><button type="button">Walima</button></div>
+    <div class="tabs rv" id="subtabs" hidden><button type="button" class="on">Departure</button><button type="button">Destination</button></div>
     <iframe id="map" class="map rv" title="Venue map" referrerpolicy="no-referrer-when-downgrade"></iframe>
     <p class="ad eng rv"><b id="vn"></b><span id="va"></span></p>
     <a class="btn rv" id="go" target="_blank" rel="noopener noreferrer" href="#">Get directions</a>
