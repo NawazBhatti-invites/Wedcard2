@@ -95,16 +95,36 @@
     <p class="tx eng rv">May Allah fill this gathering with blessings, happiness, and beautiful memories.</p>
   </div></section>
 
- <section class="sc pp" id="s-loc" data-bg="f"><div class="in wide">
+ <section class="sc pp" id="s-loc" data-bg="f">
+  <div class="in wide">
     <h2 class="hd gold rv">Locations</h2>
-    <div class="tabs rv" id="tabs"><button type="button" class="on">Rasm-e-Hina</button><button type="button">Barat</button><button type="button">Walima</button></div>
-    <div class="tabs rv" id="subtabs" hidden><button type="button" class="on">Departure</button><button type="button">Destination</button></div>
+    
+    <!-- Main Event Tabs -->
+    <div class="tabs rv" id="tabs">
+      <button type="button" class="on">Rasm-e-Hina</button>
+      <button type="button">Barat</button>
+      <button type="button">Walima</button>
+    </div>
+
+    <!-- Sub-tabs for Departure / Destination (Hidden by default) -->
+    <div class="tabs rv" id="subtabs" hidden style="display: none;">
+      <button type="button" class="on">Departure</button>
+      <button type="button">Destination</button>
+    </div>
+
+    <!-- Map & Location Info -->
     <iframe id="map" class="map rv" title="Venue map" referrerpolicy="no-referrer-when-downgrade"></iframe>
     <p class="ad eng rv"><b id="vn"></b><span id="va"></span></p>
     <a class="btn rv" id="go" target="_blank" rel="noopener noreferrer" href="#">Get directions</a>
+    
+    <!-- Contact Info -->
     <h3 class="sub eng rv">Contact</h3>
-    <div class="calls rv"><a class="btn small" href="tel:+923008188193">0300 8188193</a><a class="btn small" href="tel:+923001788424">0300 1788424</a></div>
-  </div></section>
+    <div class="calls rv">
+      <a class="btn small" href="tel:+923008188193">0300 8188193</a>
+      <a class="btn small" href="tel:+923001788424">0300 1788424</a>
+    </div>
+  </div>
+</section>
 
   <section class="sc pp" id="s-rsvp" data-bg="f"><div class="in wide">
     <h2 class="hd gold rv">We Would Love to Celebrate With You!</h2>
