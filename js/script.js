@@ -30,7 +30,7 @@
   }
   ['play', 'pause', 'volumechange'].forEach(function (e) { audio.addEventListener(e, ui); });
   audio.addEventListener('error', function () { music.hidden = true; console.warn('assets/audio/wedding-music.mp3 is missing or unreadable.'); });
-  function playAudio() { var p = audio.play(); if (p && p.catch) p.catch(ui); }          /* if blocked, the visitor can press play */
+  function playAudio() { var p = audio.play(); if (p && p.catch) p.catch(ui); }     /* if blocked, the visitor can press play */
   function seekStart() {
     if (!(startAt > 0)) return;
     if (audio.readyState >= 1) audio.currentTime = startAt; else audio.addEventListener('loadedmetadata', function () { audio.currentTime = startAt; }, { once: true });
@@ -66,7 +66,7 @@
     if (i === cur) return; cur = i;
     scenes.forEach(function (s, k) { s.classList.toggle('on', k === i); });
     stage.setAttribute('data-bg', scenes[i].getAttribute('data-bg'));        /* background cross-fades between pictures */
-    if (scenes[i].id === 's-loc' && !mapLoaded) { mapLoaded = true; venue(venueIdx); }
+    if (scenes[i].id === 's-loc') { mapLoaded = true; venue(); }
   }
   function update() {
     var max = Math.max(1, document.documentElement.scrollHeight - vh);
@@ -82,23 +82,60 @@
   size();
   $('#to-top').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
 
-  /* ---------- Venue tabs (Locations scene) ---------- */
+  /* ---------- Venue tabs (Locations scene): Barat has two locations, departure then destination ---------- */
   var V = [
-    { n: 'Al Fateh Marriage Hall', a: 'Nankana Sahib, Pakistan', ll: '31.4431226,73.6923472', u: 'https://maps.app.goo.gl/5ijWi6JC4totpVFn6' },
-    { n: 'Bhatti House (Ashfaq Bhatti)', a: 'Nankana Sahib, Pakistan', ll: '31.444889,73.694099', u: 'https://maps.app.goo.gl/Tcw7osaGgmZAr4Xz7' },
-    { n: 'Royal Marquee', a: 'Mangtanwala Road, Nankana Sahib', ll: '31.4145685,73.7529125', u: 'https://maps.app.goo.gl/woCR9DiXwZaR56259' }
-  ], tabs = $$('#tabs button'), venueIdx = 0;
-  function venue(i) {
-    venueIdx = i; tabs.forEach(function (t, k) { t.classList.toggle('on', k === i); });
-    $('#vn').textContent = V[i].n; $('#va').textContent = ' | ' + V[i].a; $('#go').href = V[i].u;
-    if (mapLoaded) $('#map').src = 'https://maps.google.com/maps?q=' + V[i].ll + '&z=16&output=embed';
+    { n: 'Al Fateh Marriage Hall', a: 'Rasm-e-Hina, Nankana Sahib', ll: '31.4431226,73.6923472', u: 'https://maps.app.goo.gl/5ijWi6JC4totpVFn6' },
+    { n: 'Bhatti House (Ashfaq Bhatti)', a: 'Barat departure, Nankana Sahib', ll: '31.444889,73.694099', u: 'https://maps.app.goo.gl/Tcw7osaGgmZAr4Xz7' },
+    { n: 'The Memories Event Complex', a: 'Barat destination', ll: '32.3432453,74.1387265', u: 'https://maps.app.goo.gl/rvsPbUDmELrQDdwb8' },
+    { n: 'Royal Marquee', a: 'Walima, Mangtanwala Road, Nankana Sahib', ll: '31.4145685,73.7529125', u: 'https://maps.app.goo.gl/woCR9DiXwZaR56259' }
+  ], GROUPS = [[0], [1, 2], [3]], tabs = $$('#tabs button'), subs = $$('#subtabs button'), subBox = $('#subtabs'), grp = 0, sub = 0;
+
+  function venue() {
+    var i = GROUPS[grp][sub] != null ? GROUPS[grp][sub] : GROUPS[grp][0];
+    
+    // Highlight active main tab
+    tabs.forEach(function (t, k) { t.classList.toggle('on', k === grp); });
+    
+    // Show subtabs ONLY when Barat (grp === 1) is selected; hide for Rasm-e-Hina (0) and Walima (2)
+    if (grp === 1) {
+      subBox.removeAttribute('hidden');
+      subBox.style.cssText = 'display: flex !important;';
+    } else {
+      subBox.setAttribute('hidden', 'true');
+      subBox.style.cssText = 'display: none !important;';
+    }
+
+    // Highlight active subtab (Departure vs Destination)
+    subs.forEach(function (t, k) { t.classList.toggle('on', k === sub); });
+    
+    // Update venue info text, directions link, and embedded map
+    if ($('#vn')) $('#vn').textContent = V[i].n;
+    if ($('#va')) $('#va').textContent = ' | ' + V[i].a;
+    if ($('#go')) $('#go').href = V[i].u;
+    if ($('#map')) $('#map').src = 'https://maps.google.com/maps?q=' + V[i].ll + '&z=16&output=embed';
   }
-  tabs.forEach(function (t, k) { t.addEventListener('click', function () { venue(k); }); }); venue(0);
+
+  tabs.forEach(function (t, k) {
+    t.addEventListener('click', function () {
+      grp = k;
+      sub = 0; // Default to Departure on main tab switch
+      venue();
+    });
+  });
+
+  subs.forEach(function (t, k) {
+    t.addEventListener('click', function () {
+      sub = k; // Switch between Departure and Destination
+      venue();
+    });
+  });
+
+  venue();
 
   /* ---------- Countdowns: each function counts down to its own start (Pakistan time, +05:00) ---------- */
   var T = {
     hina: Date.parse('2026-11-20T18:00:00+05:00'),
-    barat: Date.parse('2026-11-21T08:00:00+05:00'),   /* Sehra Bandi */
+    barat: Date.parse('2026-11-21T08:00:00+05:00'),    /* Sehra Bandi */
     walima: Date.parse('2026-11-22T14:00:00+05:00')
   };
   function p2(x) { return String(x).padStart(2, '0'); }
