@@ -21,7 +21,6 @@
   --pop: 'Poppins Local', 'Poppins', system-ui, sans-serif;                 /* three-day programme only */
   --ink: #6a5236; --paper: #f3ebdd; --champ: #b8975a; --deep: #8f6f3e;
 }
-}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;background:#e6d6c4;-webkit-text-size-adjust:100%}
@@ -166,32 +165,3 @@ dialog input,dialog textarea{font:400 16px var(--pop);color:#3d2f1e;padding:.65e
 
 /* ---------- Font assignments added later ---------- */
 .ast,.ast *{font-family:var(--astoria)}             /* invitation wording page */
-.ast .hd{font-size:2.5em}.ast .tx{font-size:1.25em}
-.pp,.pp *{font-family:var(--pop)}                    /* directions page, RSVP page and the RSVP form */
-.pp .hd{font-size:1.7em;font-weight:500;line-height:1.2}
-.pp .tx{font-size:.95em;line-height:1.5}
-.pp .btn{font-size:1em;font-weight:500;min-height:44px}.pp .btn.small{font-size:.9em;min-height:42px}
-.pp .evb .btn{font-size:.8em;padding:.4em .5em}.pp .evb small{font-size:.8em}
-dialog.pp label{font-size:.9em;font-weight:500}
-.tabs{display:flex;gap:.35em;justify-content:center;flex-wrap:wrap}
-.tabs button{min-height:40px;padding:.3em .9em;border-radius:999px;border:1px solid rgba(169,138,98,.75);background:linear-gradient(180deg,#fffaf1,#efe2cc);color:var(--ink);font-family:var(--pop);font-size:.9em;cursor:pointer;box-shadow:0 1px 3px rgba(110,90,60,.15)}
-.tabs button.on{background:linear-gradient(180deg,#c9ab6f,#a07f45);color:#fff;border-color:#8f6f3e;text-shadow:0 1px 0 rgba(0,0,0,.25)}
-/* Increase 1st page font sizes for mobile screens */
-@media (max-width: 600px) {
-  #s-welcome .in .gold.rv {
-    font-size: 2.2rem; /* Adjust heading size */
-  }
-  #s-welcome .in .sml.eng.rv {
-    font-size: 1.1rem; /* Adjust subtitle/intro text size */
-  }
-}
-/* Force larger font sizes on the first page for mobile view */
-@media (max-width: 600px) {
-  #s-welcome p {
-    font-size: 1.4rem !important; /* Increases general text lines */
-  }
-  #s-welcome h1, 
-  #s-welcome .gold.rv {
-    font-size: 2.3rem !important; /* Increases names and main headings */
-  }
-}
