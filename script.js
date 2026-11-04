@@ -83,7 +83,6 @@
   $('#to-top').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
 
   /* ---------- Venue tabs (Locations scene): Barat has two locations, departure then destination ---------- */
-  /* ---------- Venue tabs (Locations scene): Barat has two locations, departure then destination ---------- */
 var V = [
   { n: 'Al Fateh Marriage Hall', a: 'Rasm-e-Hina, Nankana Sahib', ll: '31.4431226,73.6923472', u: 'https://maps.app.goo.gl/5ijwi6JC4totpVFn6' },
   { n: 'Bhatti House (Ashfaq Bhatti)', a: 'Barat departure, Nankana Sahib', ll: '31.444889,73.694099', u: 'https://maps.app.goo.gl/Tcw7osaGgmZAr4Xz7' },
