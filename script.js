@@ -83,22 +83,30 @@
   $('#to-top').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
 
   /* ---------- Venue tabs (Locations scene): Barat has two locations, departure then destination ---------- */
-  var V = [
-    { n: 'Al Fateh Marriage Hall', a: 'Rasm-e-Hina, Nankana Sahib', ll: '31.4431226,73.6923472', u: 'https://maps.app.goo.gl/5ijWi6JC4totpVFn6' },
-    { n: 'Bhatti House (Ashfaq Bhatti)', a: 'Barat departure, Nankana Sahib', ll: '31.444889,73.694099', u: 'https://maps.app.goo.gl/Tcw7osaGgmZAr4Xz7' },
-    { n: 'The Memories Event Complex', a: 'Barat destination', ll: '32.3432453,74.1387265', u: 'https://maps.app.goo.gl/rvsPbUDmELrQDdwb8' },
-    { n: 'Royal Marquee', a: 'Walima, Mangtanwala Road, Nankana Sahib', ll: '31.4145685,73.7529125', u: 'https://maps.app.goo.gl/woCR9DiXwZaR56259' }
-  ], GROUPS = [[0], [1, 2], [3]], tabs = $$('#tabs button'), subs = $$('#subtabs button'), subBox = $('#subtabs'), grp = 0, sub = 0;
-  function venue() {
-    var i = GROUPS[grp][sub] != null ? GROUPS[grp][sub] : GROUPS[grp][0];
-    tabs.forEach(function (t, k) { t.classList.toggle('on', k === grp); });
-    subBox.hidden = GROUPS[grp].length < 2; subs.forEach(function (t, k) { t.classList.toggle('on', k === sub); });
-    $('#vn').textContent = V[i].n; $('#va').textContent = V[i].a; $('#go').href = V[i].u;
-    if (mapLoaded) $('#map').src = 'https://maps.google.com/maps?q=' + V[i].ll + '&z=16&output=embed';
-  }
-  tabs.forEach(function (t, k) { t.addEventListener('click', function () { grp = k; sub = 0; venue(); }); });
-  subs.forEach(function (t, k) { t.addEventListener('click', function () { sub = k; venue(); }); });
-  venue();
+  /* ---------- Venue tabs (Locations scene): Barat has two locations, departure then destination ---------- */
+var V = [
+  { n: 'Al Fateh Marriage Hall', a: 'Rasm-e-Hina, Nankana Sahib', ll: '31.4431226,73.6923472', u: 'https://maps.app.goo.gl/5ijwi6JC4totpVFn6' },
+  { n: 'Bhatti House (Ashfaq Bhatti)', a: 'Barat departure, Nankana Sahib', ll: '31.444889,73.694099', u: 'https://maps.app.goo.gl/Tcw7osaGgmZAr4Xz7' },
+  { n: 'The Memories Event Complex', a: 'Barat destination', ll: '32.3432453,74.1387265', u: 'https://maps.app.goo.gl/rvsPbUDmELrQDdwb8' },
+  { n: 'Royal Marquee', a: 'Walima, Mangtanwala Road, Nankana Sahib', ll: '31.4145685,73.7529125', u: 'https://maps.app.goo.gl/woCR9DiXwZaR56259' }
+], GROUPS = [[0], [1, 2], [3]], tabs = $$('#tabs button'), subs = $$('#subtabs button'), subBox = $('#subtabs'), grp = 0, sub = 0;
+
+function venue() {
+  var i = GROUPS[grp][sub] != null ? GROUPS[grp][sub] : GROUPS[grp][0];
+  tabs.forEach(function (t, k) { t.classList.toggle('on', k === grp); });
+  
+  // Only show subtabs if the active group (Barat) has more than 1 venue
+  subBox.hidden = GROUPS[grp].length < 2;
+  subBox.style.display = GROUPS[grp].length < 2 ? 'none' : 'flex';
+
+  subs.forEach(function (t, k) { t.classList.toggle('on', k === sub); });
+  $('#vn').textContent = V[i].n; $('#va').textContent = V[i].a; $('#go').href = V[i].u;
+  if (mapLoaded) $('#map').src = 'https://maps.google.com/maps?q=' + V[i].ll + '&z=16&output=embed';
+}
+
+tabs.forEach(function (t, k) { t.addEventListener('click', function () { grp = k; sub = 0; venue(); }); });
+subs.forEach(function (t, k) { t.addEventListener('click', function () { sub = k; venue(); }); });
+venue();
 
   /* ---------- Countdowns: each function counts down to its own start (Pakistan time, +05:00) ---------- */
   var T = {
