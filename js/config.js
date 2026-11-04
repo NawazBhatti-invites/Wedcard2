@@ -5,7 +5,7 @@ window.WEDDING_CONFIG = {
   rsvpEndpoint: "",
 
   music: {
-    volume: 45,          /* 0 to 100 */
-    startSeconds: 0      /* assets/audio/wedding-music.mp3 already begins at the 17th second of the song; if you replace the file with a full-length one, set 17 here */
+    volume: 60,          /* 0 to 100 */
+    startSeconds: 0      /* assets/audio/wedding-music.mp3 already begins at the 19th second of the song; if you replace the file with a full-length one, set 19 here */
   }
 };
