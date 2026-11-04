@@ -92,20 +92,30 @@ var V = [
 
 function venue() {
   var i = GROUPS[grp][sub] != null ? GROUPS[grp][sub] : GROUPS[grp][0];
+  
+  // Highlight main tab (Rasm-e-Hina, Barat, Walima)
   tabs.forEach(function (t, k) { t.classList.toggle('on', k === grp); });
   
-  // Show subtabs ONLY when Barat (group 1) is selected
+  // Toggle visibility: Display subtabs row ONLY when Barat (grp === 1) is active
   if (grp === 1) {
     subBox.removeAttribute('hidden');
-    subBox.style.display = 'flex';
+    subBox.style.display = ''; // Reset display to use CSS class styles (same as main tabs)
   } else {
     subBox.setAttribute('hidden', 'true');
     subBox.style.display = 'none';
   }
 
+  // Highlight subtab (Departure vs Destination)
   subs.forEach(function (t, k) { t.classList.toggle('on', k === sub); });
+  
+  // Update venue title, address, and Google map
   $('#vn').textContent = V[i].n; $('#va').textContent = V[i].a; $('#go').href = V[i].u;
   if (mapLoaded) $('#map').src = 'https://maps.google.com/maps?q=' + V[i].ll + '&z=16&output=embed';
+}
+
+tabs.forEach(function (t, k) { t.addEventListener('click', function () { grp = k; sub = 0; venue(); }); });
+subs.forEach(function (t, k) { t.addEventListener('click', function () { sub = k; venue(); }); });
+venue();
 }
 
 tabs.forEach(function (t, k) { t.addEventListener('click', function () { grp = k; sub = 0; venue(); }); });
