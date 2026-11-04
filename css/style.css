@@ -2,17 +2,21 @@
 @font-face{font-family:'Tempting';src:url(../assets/fonts/Tempting.otf) format('opentype');font-display:swap}
 @font-face{font-family:'Birds of Paradise';src:url(../assets/fonts/BirdsOfParadise.ttf) format('truetype');font-display:swap}
 @font-face{font-family:'Astoria';src:url(../assets/fonts/Astoria.otf) format('opentype');font-display:swap}
+@font-face{font-family:'Love';src:url(../assets/fonts/Love.otf) format('opentype');font-display:swap}
 @font-face{font-family:'Romantic';src:url(../assets/fonts/Romantic.otf) format('opentype');font-display:swap}
 @font-face{font-family:'Poppins Local';font-weight:400;src:url(../assets/fonts/Poppins-Regular.ttf) format('truetype');font-display:swap}
 @font-face{font-family:'Poppins Local';font-weight:500;src:url(../assets/fonts/Poppins-Medium.ttf) format('truetype');font-display:swap}
+
 :root{
-  --tempting:'Tempting','Parisienne','Segoe Script',cursive;   /* every text without an assigned font */
+  --tempting:'Astoria','Parisienne','Segoe Script',cursive;   /* updated from Tempting to Astoria */
   --bop:'Birds of Paradise','Parisienne','Segoe Script',cursive; /* groom's name only */
   --astoria:'Astoria','Parisienne','Segoe Script',cursive;   /* invitation wording page */
-  --romantic:'Romantic','Parisienne','Segoe Script',cursive;      /* Rasm-e-Hina, Barat, Walima */
-  --pop:'Poppins Local','Poppins',system-ui,sans-serif;          /* three-day programme only */
+  --love:'Love','Parisienne','Segoe Script',cursive;           /* Rasm-e-Hina, Barat, Walima headings */
+  --romantic:'Romantic','Parisienne','Segoe Script',cursive; 
+  --pop:'Poppins Local','Poppins',system-ui,sans-serif;         /* three-day programme only */
   --ink:#6a5236;--paper:#f3ebdd;--champ:#b8975a;--deep:#8f6f3e;
 }
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;background:#e6d6c4;-webkit-text-size-adjust:100%}
 body{margin:0;font-family:var(--tempting);color:var(--ink);overflow-x:hidden}
@@ -41,6 +45,16 @@ h1,h2,h3,p{margin:0;font-weight:400}
 .sc.on{opacity:1;visibility:visible;transition:opacity .9s ease .3s,visibility 0s}
 .in{position:relative;width:58%;margin:auto;padding:12svh 0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:.35em}
 .in.wide{width:70%;padding:11svh 0}
+
+/* ---------- Specific spacing adjustments for Save the Date & Inshallah ---------- */
+#s-date .in {
+  padding-top: 16svh; /* Increased space above Save the Date */
+  gap: 0.15em;        /* Tighter gap to bring Inshallah closer to the line above */
+}
+#s-date .insh {
+  margin-top: -0.2em; /* Pulls the Inshallah PNG further up toward the preceding text */
+}
+
 .rv{opacity:0;filter:blur(4px) drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent);transition:opacity .9s ease,filter .9s ease;transition-delay:calc(var(--i,0)*.1s + .3s)}
 .sc:not(.on) .rv{transition-delay:0s}
 .sc.on .rv{opacity:1;filter:blur(0) drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent)}
@@ -55,8 +69,9 @@ h1,h2,h3,p{margin:0;font-weight:400}
 .nm span{display:block}.nm span:nth-child(2){transform:translateX(.25em)}
 .cue{font-size:1.2em;margin-top:.8em;animation:bob 2.4s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(5px)}}
-/* programme (Poppins) */
-.ehd{font-family:var(--romantic);font-size:2.6em;font-weight:400;line-height:1.1}
+
+/* programme headings (Love font) */
+.ehd{font-family:var(--love);font-size:2.8em;font-weight:400;line-height:1.1}
 .dt{font-size:1.05em;font-weight:500}.sm{font-size:.8em}.ad{font-size:.95em;line-height:1.5}.ad b{font-weight:500}.cl{font-size:.82em;margin-top:.3em}
 .tm,.cd>div{border:1px solid rgba(169,138,98,.38);border-radius:999px;background:linear-gradient(145deg,rgba(120,95,65,.12),rgba(255,255,255,.3));box-shadow:inset 1px 2px 4px rgba(100,76,48,.34),inset -1px -1px 2px rgba(255,255,255,.9)}
 .tm{font-size:1.5em;font-weight:500;padding:.15em 1em;line-height:1.5}
@@ -67,12 +82,21 @@ h1,h2,h3,p{margin:0;font-weight:400}
 .cd b{display:block;font-size:1.45em;font-weight:500;line-height:1.1}.cd span{font-size:.7em}
 .sc.walima{overflow:hidden}
 .walima .in{position:absolute;top:13.5%;left:50%;transform:translateX(-50%);width:54%;height:35%;padding:0;margin:0;justify-content:center;gap:.2em}
-.walima .insh{width:46%}.walima .ehd{font-size:2.1em}.walima .tm{font-size:1.2em}.walima .cd{font-size:.82em}.walima .btn{min-height:40px;font-size:1.05em;padding:.15em 1.1em}
-/* buttons (Tempting) */
+.walima .insh{width:46%}.walima .ehd{font-size:2.3em}.walima .tm{font-size:1.2em}.walima .cd{font-size:.82em}.walima .btn{min-height:40px;font-size:1.05em;padding:.15em 1.1em}
+
+/* buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:.3em 1.5em;margin-top:.3em;border-radius:999px;border:1px solid rgba(169,138,98,.75);
   background:linear-gradient(180deg,#fffaf1,#efe2cc);color:var(--ink);font-family:var(--tempting);font-size:1.35em;text-decoration:none;cursor:pointer;text-shadow:0 1px 0 #fff;box-shadow:0 2px 6px rgba(110,90,60,.22),inset 0 1px 0 #fff}
 .btn:active{transform:translateY(1px);box-shadow:inset 0 2px 4px rgba(110,90,60,.3)}
 .btn.small{font-size:1.1em;min-height:42px}.btn[disabled]{opacity:.55;cursor:wait}
+
+/* Specific styling for Get Directions buttons to use Poppins font as requested */
+a.btn[href*="maps.app.goo.gl"], #go {
+  font-family: var(--pop);
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
 .vc{width:100%;padding:.9em .8em;border:1px solid rgba(169,138,98,.45);border-radius:1.1em;background:rgba(255,251,243,.82);display:flex;flex-direction:column;align-items:center;gap:.4em}
 .vc h3{font-size:1.7em}.vc p{font-size:1.1em}.vc iframe{width:100%;height:150px;border:0;border-radius:.7em;background:#e9dcc8}
 .evb{display:grid;grid-template-columns:1fr 1fr;gap:.45em;width:100%}
@@ -134,9 +158,8 @@ dialog input,dialog textarea{font:400 16px var(--pop);color:#3d2f1e;padding:.65e
   .rv{opacity:1;filter:none;transition:none}.stage,.door,.seal{transition-duration:.01s!important}
 }
 
-
 /* ---------- Font assignments added later ---------- */
-.ast,.ast *{font-family:var(--astoria)}              /* invitation wording page */
+.ast,.ast *{font-family:var(--astoria)}             /* invitation wording page */
 .ast .hd{font-size:2.5em}.ast .tx{font-size:1.25em}
 .pp,.pp *{font-family:var(--pop)}                    /* directions page, RSVP page and the RSVP form */
 .pp .hd{font-size:1.7em;font-weight:500;line-height:1.2}
@@ -145,28 +168,5 @@ dialog input,dialog textarea{font:400 16px var(--pop);color:#3d2f1e;padding:.65e
 .pp .evb .btn{font-size:.8em;padding:.4em .5em}.pp .evb small{font-size:.8em}
 dialog.pp label{font-size:.9em;font-weight:500}
 .tabs{display:flex;gap:.35em;justify-content:center;flex-wrap:wrap}
-.tabs button{min-height:40px;padding:.3em .9em;border-radius:999px;border:1px solid rgba(169,138,98,.7);background:#fffaf1;color:var(--ink);font:500 .9em var(--pop);cursor:pointer}
-.tabs button.on{background:linear-gradient(180deg,#c9ab6f,#a07f45);color:#fff;border-color:#8f6f3e}
-.map{width:100%;height:clamp(120px,19svh,170px);border:1px solid rgba(169,138,98,.6);border-radius:.8em;background:#e9dcc8}
-.sub{font-size:1.1em;font-weight:500;margin-top:.3em}
-.calls{display:flex;gap:.4em;flex-wrap:wrap;justify-content:center}
-
-/* ---------- Welcome wording and three-occasion RSVP ---------- */
-#s-welcome .in{width:66%}
-.inv{font-size:1.75em;line-height:1.25}
-.evb .btn:last-child:nth-child(odd){grid-column:1/-1}
-
-/* ---------- Bismillah in a classic Arabic calligraphy font; simple RSVP form ---------- */
-.bis{font-family:'Aref Ruqaa','Amiri','Traditional Arabic','Noto Naskh Arabic',serif;font-size:2.4em;font-weight:700;line-height:1.7;margin-bottom:.1em}
-.hint{font-size:.9em;text-align:center;color:var(--ink)}
-/* Force subtabs to hide completely when hidden */
-#subtabs[hidden] {
-  display: none !important;
-}
-
-#subtabs {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
-}
+.tabs button{min-height:40px;padding:.3em .9em;border-radius:999px;border:1px solid rgba(169,138,98,.75);background:linear-gradient(180deg,#fffaf1,#efe2cc);color:var(--ink);font-family:var(--pop);font-size:.9em;cursor:pointer;box-shadow:0 1px 3px rgba(110,90,60,.15)}
+.tabs button.on{background:linear-gradient(180deg,#c9ab6f,#a07f45);color:#fff;border-color:#8f6f3e;text-shadow:0 1px 0 rgba(0,0,0,.25)}
