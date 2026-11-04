@@ -167,3 +167,11 @@ dialog.pp label{font-size:.9em;font-weight:500}
 #subtabs[hidden] {
   display: none !important;
 }
+/* Force hidden subtabs to stay hidden when attribute is present */
+#subtabs[hidden] {
+  display: none !important;
+}
+
+#subtabs {
+  margin-top: 10px;
+}
