@@ -159,3 +159,7 @@ dialog.pp label{font-size:.9em;font-weight:500}
 /* ---------- Bismillah in a classic Arabic calligraphy font; simple RSVP form ---------- */
 .bis{font-family:'Aref Ruqaa','Amiri','Traditional Arabic','Noto Naskh Arabic',serif;font-size:2.4em;font-weight:700;line-height:1.7;margin-bottom:.1em}
 .hint{font-size:.9em;text-align:center;color:var(--ink)}
+/* Force subtabs to hide completely when the hidden attribute is present */
+#subtabs[hidden] {
+  display: none !important;
+}
